@@ -58,7 +58,7 @@ public class Login {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(36, 191, 356, 364);
 		lblNewLabel.setBackground(Color.WHITE);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Rohan\\Downloads\\rsz_1rsz_154892547f0baaimage_1.jpg"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Rohan\\git\\Encheres\\Encheres\\src\\rsz_1rsz_154892547f0baaimage_1.jpg"));
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblEncheres = new JLabel("ench\u00E8res");

@@ -90,19 +90,14 @@ public class Login {
 		label.setBounds(363, 361, 119, 23);
 		frame.getContentPane().add(label);
 		
-		JButton btnLogin = new JButton("Login");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnLogin.setIcon(new ImageIcon("C:\\Users\\Rohan\\Desktop\\login.gif"));
-		btnLogin.setBackground(new Color(30, 144, 255));
-		btnLogin.setBounds(333, 488, 149, 35);
-		frame.getContentPane().add(btnLogin);
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Rohan\\Desktop\\login.gif"));
+		lblNewLabel_1.setBounds(291, 553, 180, 35);
+		frame.getContentPane().add(lblNewLabel_1);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Rohan\\Desktop\\register.gif"));
-		btnNewButton.setBounds(473, 494, 165, 29);
-		frame.getContentPane().add(btnNewButton);
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Rohan\\Desktop\\register.gif"));
+		lblNewLabel_2.setBounds(459, 542, 220, 56);
+		frame.getContentPane().add(lblNewLabel_2);
 	}
 }

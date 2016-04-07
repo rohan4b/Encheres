@@ -12,11 +12,13 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Login {
 
-	private JFrame frame;
-	private JTextField textField;
+	private JFrame loginFrame;
+	private JTextField usernameField;
 	private JPasswordField passwordField;
 
 	/**
@@ -27,7 +29,7 @@ public class Login {
 			public void run() {
 				try {
 					Login window = new Login();
-					window.frame.setVisible(true);
+					window.loginFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,61 +45,79 @@ public class Login {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the loginFrame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setFont(new Font("Coffee At Midnight Demo", Font.PLAIN, 39));
-		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBackground(Color.LIGHT_GRAY);
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Rohan\\Downloads\\Capture.JPG"));
-		frame.setBounds(100, 100, 716, 681);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		loginFrame = new JFrame();
+		loginFrame.getContentPane().setFont(new Font("Coffee At Midnight Demo", Font.PLAIN, 39));
+		loginFrame.getContentPane().setBackground(Color.WHITE);
+		loginFrame.setBackground(Color.LIGHT_GRAY);
+		loginFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Rohan\\Downloads\\Capture.JPG"));
+		loginFrame.setBounds(100, 100, 716, 681);
+		loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		loginFrame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(36, 191, 356, 364);
-		lblNewLabel.setBackground(Color.WHITE);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Rohan\\git\\Encheres\\Encheres\\src\\rsz_1rsz_154892547f0baaimage_1.jpg"));
-		frame.getContentPane().add(lblNewLabel);
+		JLabel LogoLabel = new JLabel("");
+		LogoLabel.setBounds(36, 191, 356, 364);
+		LogoLabel.setBackground(Color.WHITE);
+		LogoLabel.setIcon(new ImageIcon("./Encheres/Encheres/src/rsz_1rsz_154892547f0baaimage_1.jpg"));
+		loginFrame.getContentPane().add(LogoLabel);
 		
-		JLabel lblEncheres = new JLabel("ench\u00E8res");
-		lblEncheres.setForeground(new Color(139, 0, 0));
-		lblEncheres.setFont(new Font("Coffee At Midnight Demo", Font.PLAIN, 79));
-		lblEncheres.setBounds(177, 48, 305, 75);
-		frame.getContentPane().add(lblEncheres);
+		JLabel TitleLabel = new JLabel("ench\u00E8res");
+		TitleLabel.setForeground(new Color(139, 0, 0));
+		TitleLabel.setFont(new Font("Coffee At Midnight Demo", Font.PLAIN, 79));
+		TitleLabel.setBounds(177, 48, 305, 75);
+		loginFrame.getContentPane().add(TitleLabel);
 		
-		textField = new JTextField();
-		textField.setBackground(new Color(0, 255, 127));
-		textField.setBounds(492, 285, 146, 26);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		usernameField = new JTextField();
+		usernameField.setBackground(new Color(0, 255, 127));
+		usernameField.setBounds(492, 285, 146, 26);
+		loginFrame.getContentPane().add(usernameField);
+		usernameField.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBackground(new Color(0, 255, 127));
 		passwordField.setBounds(492, 361, 146, 26);
-		frame.getContentPane().add(passwordField);
+		loginFrame.getContentPane().add(passwordField);
 		
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setForeground(new Color(139, 0, 0));
-		lblUsername.setFont(new Font("Coffee At Midnight Demo", Font.PLAIN, 26));
-		lblUsername.setBounds(363, 280, 119, 35);
-		frame.getContentPane().add(lblUsername);
+		JLabel UsernameLabel = new JLabel("Username");
+		UsernameLabel.setForeground(new Color(139, 0, 0));
+		UsernameLabel.setFont(new Font("Coffee At Midnight Demo", Font.PLAIN, 26));
+		UsernameLabel.setBounds(363, 280, 119, 35);
+		loginFrame.getContentPane().add(UsernameLabel);
 		
-		JLabel label = new JLabel("Password");
-		label.setForeground(new Color(139, 0, 0));
-		label.setFont(new Font("Coffee At Midnight Demo", Font.PLAIN, 26));
-		label.setBounds(363, 361, 119, 23);
-		frame.getContentPane().add(label);
+		JLabel passwordLabel = new JLabel("Password");
+		passwordLabel.setForeground(new Color(139, 0, 0));
+		passwordLabel.setFont(new Font("Coffee At Midnight Demo", Font.PLAIN, 26));
+		passwordLabel.setBounds(363, 361, 119, 23);
+		loginFrame.getContentPane().add(passwordLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Rohan\\Desktop\\login.gif"));
-		lblNewLabel_1.setBounds(291, 553, 180, 35);
-		frame.getContentPane().add(lblNewLabel_1);
+		JButton RegisterButton = new JButton("Register");
+		RegisterButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loginFrame.setVisible(false);
+				new registration();
+					
+			}
+		});
+		RegisterButton.setBounds(537, 559, 89, 23);
+		loginFrame.getContentPane().add(RegisterButton);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Rohan\\Desktop\\register.gif"));
-		lblNewLabel_2.setBounds(459, 542, 220, 56);
-		frame.getContentPane().add(lblNewLabel_2);
+		JButton LoginButton = new JButton("Login");
+		LoginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		LoginButton.setBounds(415, 559, 89, 23);
+		loginFrame.getContentPane().add(LoginButton);
+		
+		/*RegisterLabel.addActionListener(new RegisterActionListener());
+		
+		class RegisterActionListener implements ActionListener{
+		      public void actionPerformed(ActionEvent e) {
+		          new registration();
+		      }*/
+		
+		
 	}
 }

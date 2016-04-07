@@ -18,7 +18,7 @@ import java.sql.*;
 
 public class registration {
 
-	private JFrame frmEncheres;
+	private JFrame registrationFrame;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_6;
@@ -44,7 +44,7 @@ public class registration {
 			public void run() {
 				try {
 					registration window = new registration();
-					window.frmEncheres.setVisible(true);
+					window.registrationFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,60 +63,60 @@ public class registration {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmEncheres = new JFrame();
-		frmEncheres.setTitle("Encheres");
-		frmEncheres.getContentPane().setBackground(Color.CYAN);
-		frmEncheres.getContentPane().setForeground(Color.CYAN);
-		frmEncheres.setBounds(100, 100, 612, 599);
-		frmEncheres.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmEncheres.getContentPane().setLayout(null);
+		registrationFrame = new JFrame();
+		registrationFrame.setTitle("Encheres");
+		registrationFrame.getContentPane().setBackground(Color.CYAN);
+		registrationFrame.getContentPane().setForeground(Color.CYAN);
+		registrationFrame.setBounds(100, 100, 612, 599);
+		registrationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		registrationFrame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Registration");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNewLabel.setForeground(Color.BLACK);
-		lblNewLabel.setBounds(74, 23, 297, 20);
-		frmEncheres.getContentPane().add(lblNewLabel);
+		JLabel RegistrationText = new JLabel("Registration");
+		RegistrationText.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		RegistrationText.setForeground(Color.BLACK);
+		RegistrationText.setBounds(74, 23, 297, 20);
+		registrationFrame.getContentPane().add(RegistrationText);
 		
-		JLabel lblNewLabel_1 = new JLabel("Name");
-		lblNewLabel_1.setBounds(74, 85, 46, 14);
-		frmEncheres.getContentPane().add(lblNewLabel_1);
+		JLabel NameLabel = new JLabel("Name");
+		NameLabel.setBounds(74, 85, 46, 14);
+		registrationFrame.getContentPane().add(NameLabel);
 		
 		textField = new JTextField();
 		textField.setBounds(361, 83, 110, 20);
-		frmEncheres.getContentPane().add(textField);
+		registrationFrame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Username");
-		lblNewLabel_2.setBounds(74, 127, 95, 20);
-		frmEncheres.getContentPane().add(lblNewLabel_2);
+		JLabel UsernameLabel = new JLabel("Username");
+		UsernameLabel.setBounds(74, 127, 95, 20);
+		registrationFrame.getContentPane().add(UsernameLabel);
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(361, 128, 86, 20);
-		frmEncheres.getContentPane().add(textField_1);
+		registrationFrame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(74, 168, 95, 14);
-		frmEncheres.getContentPane().add(lblPassword);
+		JLabel PasswordLabel = new JLabel("Password");
+		PasswordLabel.setBounds(74, 168, 95, 14);
+		registrationFrame.getContentPane().add(PasswordLabel);
 		
-		JLabel lblReenterPassword = new JLabel("Re-Enter Password");
-		lblReenterPassword.setBounds(74, 193, 153, 14);
-		frmEncheres.getContentPane().add(lblReenterPassword);
+		JLabel ReenterPasswordLabel = new JLabel("Re-Enter Password");
+		ReenterPasswordLabel.setBounds(74, 193, 153, 14);
+		registrationFrame.getContentPane().add(ReenterPasswordLabel);
 		
-		JLabel lblContactDetails = new JLabel("Contact No.");
-		lblContactDetails.setBounds(74, 243, 106, 14);
-		frmEncheres.getContentPane().add(lblContactDetails);
+		JLabel ContactDetailsLabel = new JLabel("Contact No.");
+		ContactDetailsLabel.setBounds(74, 243, 106, 14);
+		registrationFrame.getContentPane().add(ContactDetailsLabel);
 		
 		textField_6 = new JTextField();
 		textField_6.setBounds(361, 241, 86, 20);
-		frmEncheres.getContentPane().add(textField_6);
+		registrationFrame.getContentPane().add(textField_6);
 		textField_6.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
 		//comboBox.setModel(new DefaultComboBoxModel(new String[] {"What is your favourite flower?", "What is the name of your first pet?"}));
 		
 		comboBox.setBounds(361, 296, 173, 20);
-		frmEncheres.getContentPane().add(comboBox);
+		registrationFrame.getContentPane().add(comboBox);
 		questions[0] = "In what city were you born?";
 		questions[1] = "What is the name of your first school?";
 		questions[2] = "What is your favorite movie?";
@@ -126,6 +126,7 @@ public class registration {
 		for (int j= 0 ; j< 5; j++) {
 			comboBox.addItem(questions[j]);
 		}
+		
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event)
 			{
@@ -135,18 +136,18 @@ public class registration {
 
 			}
 		});
-		JLabel lblSecurityQuestion = new JLabel("Security Question");
-		lblSecurityQuestion.setBounds(74, 299, 197, 14);
-		frmEncheres.getContentPane().add(lblSecurityQuestion);
+		JLabel SecurityQuestionLabel = new JLabel("Security Question");
+		SecurityQuestionLabel.setBounds(74, 299, 197, 14);
+		registrationFrame.getContentPane().add(SecurityQuestionLabel);
 		
-		JLabel lblAnswer = new JLabel("Answer");
-		lblAnswer.setBounds(74, 345, 128, 14);
-		frmEncheres.getContentPane().add(lblAnswer);
+		JLabel AnswerLabel = new JLabel("Answer");
+		AnswerLabel.setBounds(74, 345, 128, 14);
+		registrationFrame.getContentPane().add(AnswerLabel);
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
 		textField_4.setBounds(361, 343, 86, 20);
-		frmEncheres.getContentPane().add(textField_4);
+		registrationFrame.getContentPane().add(textField_4);
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener()
@@ -160,20 +161,34 @@ public class registration {
 				}
 		});
 		btnSubmit.setBounds(91, 437, 153, 23);
-		frmEncheres.getContentPane().add(btnSubmit);
+		registrationFrame.getContentPane().add(btnSubmit);
 		
 		JButton btnClearDetails = new JButton("Clear details");
+		btnClearDetails.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 textField.setText("");
+				 passwordField_1.setText("");
+				 passwordField.setText("");
+				  textField_1.setText("");
+				 textField_6.setText("");
+				  textField_4.setText("");
+			}
+		});
 		btnClearDetails.setBounds(319, 437, 164, 23);
-		frmEncheres.getContentPane().add(btnClearDetails);
+		registrationFrame.getContentPane().add(btnClearDetails);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(361, 191, 110, 19);
-		frmEncheres.getContentPane().add(passwordField);
+		registrationFrame.getContentPane().add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setBounds(361, 166, 110, 19);
-		frmEncheres.getContentPane().add(passwordField_1);
+		registrationFrame.getContentPane().add(passwordField_1);
+		
+		registrationFrame.setVisible(true);
+		
 	}
+	//registrationFrame.setVisible(ture);
 	public void getUserInformation() {
 		 name = textField.getText();
 		 password = passwordField_1.getPassword();

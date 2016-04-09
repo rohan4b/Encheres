@@ -48,6 +48,7 @@ public class Login {
 	 * Initialize the contents of the loginFrame.
 	 */
 	private void initialize() {
+		ImageIcon i1=new ImageIcon("SoldOut.jpg");
 		loginFrame = new JFrame();
 		loginFrame.getContentPane().setFont(new Font("Coffee At Midnight Demo", Font.PLAIN, 39));
 		loginFrame.getContentPane().setBackground(Color.WHITE);
@@ -57,10 +58,10 @@ public class Login {
 		loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		loginFrame.getContentPane().setLayout(null);
 		
-		JLabel LogoLabel = new JLabel("");
+		JLabel LogoLabel = new JLabel(i1);
 		LogoLabel.setBounds(36, 191, 356, 364);
 		LogoLabel.setBackground(Color.WHITE);
-		LogoLabel.setIcon(new ImageIcon("./Encheres/Encheres/src/rsz_1rsz_154892547f0baaimage_1.jpg"));
+		//LogoLabel.setIcon(new ImageIcon("./Encheres/Encheres/src/rsz_1rsz_154892547f0baaimage_1.jpg"));
 		loginFrame.getContentPane().add(LogoLabel);
 		
 		JLabel TitleLabel = new JLabel("ench\u00E8res");
@@ -110,13 +111,7 @@ public class Login {
 		});
 		LoginButton.setBounds(415, 559, 89, 23);
 		loginFrame.getContentPane().add(LoginButton);
-		
-		/*RegisterLabel.addActionListener(new RegisterActionListener());
-		
-		class RegisterActionListener implements ActionListener{
-		      public void actionPerformed(ActionEvent e) {
-		          new registration();
-		      }*/
+	
 		
 		
 	}

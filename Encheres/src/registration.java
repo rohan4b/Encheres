@@ -155,7 +155,7 @@ public class registration {
 			public void actionPerformed(ActionEvent event)
 				{
 
-				getUserInformation();
+					getUserInformation();
 					registerUserData();
 
 				}

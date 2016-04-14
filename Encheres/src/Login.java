@@ -15,12 +15,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import java.sql.*;
+
 public class Login {
 
 	private JFrame loginFrame;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-
+	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+	   static final String DB_URL = "jdbc:mysql://localhost:3306/test";
+	   static final String USER = "root";
+	   static final String PASS = "root";
+	   
+	   String name;
+	   String password;
+	   String Username;
+	   String databasePassword;
+	   int userid;
+	   int isPasswordOk=0;
 	/**
 	 * Launch the application.
 	 */
@@ -105,14 +117,61 @@ public class Login {
 		loginFrame.getContentPane().add(RegisterButton);
 		
 		JButton LoginButton = new JButton("Login");
-		LoginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
+		LoginButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent event)
+				{
+
+					CheckPassword();
+					new HomePage(userid);
+
+				}
 		});
 		LoginButton.setBounds(415, 559, 89, 23);
 		loginFrame.getContentPane().add(LoginButton);
-	
-		
-		
 	}
+		public void CheckPassword() {
+	
+			Connection conn = null;
+		      Statement stmt = null;
+			try {
+				  Class.forName("com.mysql.jdbc.Driver");
+				  name=usernameField.getText();
+				  password=String.valueOf(passwordField.getPassword());
+			      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			     // System.out.println(name+password);
+
+			       stmt = conn.createStatement();
+			    String SQL = "SELECT * FROM user_detail ;";
+
+			    ResultSet rs = stmt.executeQuery(SQL);
+			    
+			            // Check Username and Password
+			    while (rs.next()) {
+			    	Username = rs.getString("username");
+ 			         databasePassword = rs.getString("password");
+				      System.out.println(Username+" "+databasePassword);      
+			    if (name.equalsIgnoreCase(Username) && password.equals(databasePassword)) 
+			    	{
+			    		isPasswordOk=1;
+			    		this.userid=rs.getInt("userID");
+			    		break;
+			    	} 
+			    }
+			    
+			    if(isPasswordOk==1)
+			    {
+			    	System.out.println("Successful Login!\n----");
+			    	
+			    	
+			    	isPasswordOk=0;
+			    }else
+			    {
+			    	System.out.println("Login Failed!\n----");
+			    }
+			    rs.close();
 }
+			catch (Exception e) {
+				System.out.println("ExceptionPassword is " + e);
+			}
+		}}

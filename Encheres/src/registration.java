@@ -19,25 +19,27 @@ import java.sql.*;
 public class registration {
 
 	private JFrame registrationFrame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_6;
-	private JTextField textField_4;
+	private JTextField nameField;
+	private JTextField usernameField;
+	private JTextField contactField;
+	private JTextField answerField;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
+	private int userID;
 	private final Action action = new SwingAction();
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost:3306/test";
-	   //  Database credentials
 	   static final String USER = "root";
-	   static final String PASS = "abcd";
+	   static final String PASS = "root";
+	   
+	   
 	/**
 	 * Launch the application.
 	 */
 	   String name,username,question,answer,contact;
 	char[] password;
 	String questions[] = new String[50];
-	int userid;
+	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -81,19 +83,19 @@ public class registration {
 		NameLabel.setBounds(74, 85, 46, 14);
 		registrationFrame.getContentPane().add(NameLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(361, 83, 110, 20);
-		registrationFrame.getContentPane().add(textField);
-		textField.setColumns(10);
+		nameField = new JTextField();
+		nameField.setBounds(361, 83, 110, 20);
+		registrationFrame.getContentPane().add(nameField);
+		nameField.setColumns(10);
 		
 		JLabel UsernameLabel = new JLabel("Username");
 		UsernameLabel.setBounds(74, 127, 95, 20);
 		registrationFrame.getContentPane().add(UsernameLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(361, 128, 86, 20);
-		registrationFrame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		usernameField = new JTextField();
+		usernameField.setBounds(361, 128, 86, 20);
+		registrationFrame.getContentPane().add(usernameField);
+		usernameField.setColumns(10);
 		
 		JLabel PasswordLabel = new JLabel("Password");
 		PasswordLabel.setBounds(74, 168, 95, 14);
@@ -107,16 +109,15 @@ public class registration {
 		ContactDetailsLabel.setBounds(74, 243, 106, 14);
 		registrationFrame.getContentPane().add(ContactDetailsLabel);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(361, 241, 86, 20);
-		registrationFrame.getContentPane().add(textField_6);
-		textField_6.setColumns(10);
+		contactField = new JTextField();
+		contactField.setBounds(361, 241, 86, 20);
+		registrationFrame.getContentPane().add(contactField);
+		contactField.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
-		//comboBox.setModel(new DefaultComboBoxModel(new String[] {"What is your favourite flower?", "What is the name of your first pet?"}));
+		JComboBox securityComboBox = new JComboBox();
 		
-		comboBox.setBounds(361, 296, 173, 20);
-		registrationFrame.getContentPane().add(comboBox);
+		securityComboBox.setBounds(361, 296, 173, 20);
+		registrationFrame.getContentPane().add(securityComboBox);
 		questions[0] = "In what city were you born?";
 		questions[1] = "What is the name of your first school?";
 		questions[2] = "What is your favorite movie?";
@@ -124,13 +125,13 @@ public class registration {
 		questions[4] = "What is the name of your favorite pet?";
 
 		for (int j= 0 ; j< 5; j++) {
-			comboBox.addItem(questions[j]);
+			securityComboBox.addItem(questions[j]);
 		}
 		
-		comboBox.addActionListener(new ActionListener() {
+		securityComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event)
 			{
-				Object selectedStateobj = comboBox.getSelectedItem();
+				Object selectedStateobj = securityComboBox.getSelectedItem();
 				question = String.valueOf(selectedStateobj);
 				//index = combobox1.getSelectedIndex();
 
@@ -144,15 +145,15 @@ public class registration {
 		AnswerLabel.setBounds(74, 345, 128, 14);
 		registrationFrame.getContentPane().add(AnswerLabel);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(361, 343, 86, 20);
-		registrationFrame.getContentPane().add(textField_4);
+		answerField = new JTextField();
+		answerField.setColumns(10);
+		answerField.setBounds(361, 343, 86, 20);
+		registrationFrame.getContentPane().add(answerField);
 		
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.addActionListener(new ActionListener()
+		btnSubmit.addActionListener(new ActionListener()     //submit button action listner
 		{
-			public void actionPerformed(ActionEvent event)
+			public void actionPerformed(ActionEvent event)     
 				{
 
 					getUserInformation();
@@ -166,12 +167,12 @@ public class registration {
 		JButton btnClearDetails = new JButton("Clear details");
 		btnClearDetails.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 textField.setText("");
+				 nameField.setText("");
 				 passwordField_1.setText("");
 				 passwordField.setText("");
-				  textField_1.setText("");
-				 textField_6.setText("");
-				  textField_4.setText("");
+				  usernameField.setText("");
+				 contactField.setText("");
+				  answerField.setText("");
 			}
 		});
 		btnClearDetails.setBounds(319, 437, 164, 23);
@@ -188,58 +189,52 @@ public class registration {
 		registrationFrame.setVisible(true);
 		
 	}
-	//registrationFrame.setVisible(ture);
 	public void getUserInformation() {
-		 name = textField.getText();
+		 name = nameField.getText();
 		 password = passwordField_1.getPassword();
-		 username = textField_1.getText();
-		 contact = textField_6.getText();
-		 answer = textField_4.getText();
-		// u[i].getuserid();
-		 //user_id=u.getUserid();
-		 //Object selectedStateobj = comboBox.getSelectedItem();
-		//	question = String.valueOf(selectedStateobj);
+		 username = usernameField.getText();
+		 contact = contactField.getText();
+		 answer = answerField.getText();
+		// User userObj=new User();
+		//	userObj.setUserID();
+			// userID=userObj.getUserID();
+			// System.out.println("UserID:"+ userID);
 
 	}
 
 	public void registerUserData() {
 		Connection conn = null;
 	      Statement stmt = null;
+	      
 		try {
-
-		  
-			  Class.forName("com.mysql.jdbc.Driver");
-
-		    
-		      System.out.println("Connecting to database...");
-		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		    
-		      		  PreparedStatement updateemp = conn.prepareStatement("insert into user_detail values(?,?,?,?,?,?)");
-		    	      updateemp.setInt(3,0000);
+			 Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			 
+		      		  PreparedStatement updateemp = conn.prepareStatement("insert into user_detail values(?,?,?,?,?,?,?)");
+		    	    //  updateemp.setInt(3,0000);
 		    	      updateemp.setString(1,name);
 		    	      updateemp.setString(2, String.valueOf(passwordField_1.getPassword()));
 		    	      updateemp.setString(4,question);
 		    	      updateemp.setString(6,contact);
 		    	      updateemp.setString(5,answer);
+		    	      updateemp.setInt(3, userID);
+		    	      updateemp.setString(7,username);
 		    	      updateemp.executeUpdate();
 			//st1.execute("INSERT INTO User_Details (Name,Gender,Password,DOB,Mobile_Number,Email,Area,State,Nationality,StateIndex) VALUES('"+name+"','"+gender+"','"+password+"','"+dobb+"','"+mobileNumber+"','"+email+"','"+area+"','"+state+"','"+nationality+"',"+index+")");
 			//st1.close();
 			//con1.close();
 			//JOptionPane.showMessageDialog(null,"Data are Registered Successfully");
-		  
+		    	     
 
 		}
 		catch (Exception e) {
-			System.out.println("Exception1 is " + e);
+			System.out.println("ExceptionReg is " + e);
 		}
 
 	}
 	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
 		public void actionPerformed(ActionEvent e) {
+			
 		}
 	}
 }

@@ -1,19 +1,14 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import java.sql.*;
 
 public class registration {
@@ -26,13 +21,6 @@ public class registration {
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
 	private int userID;
-	private final Action action = new SwingAction();
-	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   static final String DB_URL = "jdbc:mysql://localhost:3306/test";
-	   static final String USER = "root";
-	   static final String PASS = "root";
-	   
-	   
 	/**
 	 * Launch the application.
 	 */
@@ -195,23 +183,12 @@ public class registration {
 		 username = usernameField.getText();
 		 contact = contactField.getText();
 		 answer = answerField.getText();
-		// User userObj=new User();
-		//	userObj.setUserID();
-			// userID=userObj.getUserID();
-			// System.out.println("UserID:"+ userID);
-
 	}
 
 	public void registerUserData() {
-		Connection conn = null;
-	      Statement stmt = null;
-	      
+		Connection conn = MySql.getConnection();
 		try {
-			 Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			 
-		      		  PreparedStatement updateemp = conn.prepareStatement("insert into user_detail values(?,?,?,?,?,?,?)");
-		    	    //  updateemp.setInt(3,0000);
+		      		  PreparedStatement updateemp = conn.prepareStatement("insert into user_detail values(?,?,?,?,?,?,?,?)");
 		    	      updateemp.setString(1,name);
 		    	      updateemp.setString(2, String.valueOf(passwordField_1.getPassword()));
 		    	      updateemp.setString(4,question);
@@ -219,22 +196,12 @@ public class registration {
 		    	      updateemp.setString(5,answer);
 		    	      updateemp.setInt(3, userID);
 		    	      updateemp.setString(7,username);
+		    	      updateemp.setInt(8, 0);
 		    	      updateemp.executeUpdate();
-			//st1.execute("INSERT INTO User_Details (Name,Gender,Password,DOB,Mobile_Number,Email,Area,State,Nationality,StateIndex) VALUES('"+name+"','"+gender+"','"+password+"','"+dobb+"','"+mobileNumber+"','"+email+"','"+area+"','"+state+"','"+nationality+"',"+index+")");
-			//st1.close();
-			//con1.close();
-			//JOptionPane.showMessageDialog(null,"Data are Registered Successfully");
-		    	     
-
 		}
 		catch (Exception e) {
 			System.out.println("ExceptionReg is " + e);
 		}
 
-	}
-	private class SwingAction extends AbstractAction {
-		public void actionPerformed(ActionEvent e) {
-			
-		}
 	}
 }

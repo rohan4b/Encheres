@@ -10,28 +10,26 @@ import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.sun.glass.ui.Window;
+
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class ItemReg extends JFrame {
+public class ItemReg {
 
-	private JPanel contentPane;
+	private JFrame frame;
 	private JTextField tfName;
-	private JTextField tfModelId;
+	private JTextField tfItem;
+	private JTextField tfDescription;
+	private JTextField tfModelID;
 	private JTextField tfAuctPrice;
-	private JTextField tfDescrip;
-	private JButton btnSubmit;
-	private JButton btnClear;
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   static final String DB_URL = "jdbc:mysql://localhost:3306/test";
-	   static final String USER = "root";
-	   static final String PASS = "root";
 
-	
-	private String name, description, modelID, status;
-	private int auctionPrice, sellingPrice, id, sellerID, buyerID;// 0 for not sold; 1 for available; 2 for sold;
+	private String name, description, modelID, status="available";
+	private int auctionPrice, sellingPrice, id, buyerID;// 0 for not sold; 1 for available; 2 for sold;
+	 int sellerID;
 	/**
 	 * Launch the application.
 	 */
@@ -39,8 +37,8 @@ public class ItemReg extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ItemReg frame = new ItemReg(null);
-					frame.setVisible(true);
+					//ItemReg window = new ItemReg();
+				//	window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,96 +47,111 @@ public class ItemReg extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
-	public ItemReg(HomePage user) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 526, 464);
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.CYAN);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	public ItemReg(int sellerID) {
+		this.sellerID=sellerID;
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		
+		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.CYAN);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblName = new JLabel("Name");
+		lblName.setBounds(74, 68, 46, 14);
+		frame.getContentPane().add(lblName);
 		
 		tfName = new JTextField();
-		tfName.setBounds(235, 63, 155, 20);
-		contentPane.add(tfName);
+		tfName.setBounds(229, 65, 86, 20);
+		frame.getContentPane().add(tfName);
 		tfName.setColumns(10);
 		
 		JLabel lblItemName = new JLabel("Item Name");
-		lblItemName.setBounds(71, 63, 154, 20);
-		contentPane.add(lblItemName);
+		lblItemName.setBounds(74, 110, 86, 14);
+		frame.getContentPane().add(lblItemName);
 		
-		JLabel lblModelId = new JLabel("Model ID");
-		lblModelId.setBounds(71, 111, 154, 20);
-		contentPane.add(lblModelId);
-		
-		JLabel lblAuctionId = new JLabel("Auction price");
-		lblAuctionId.setBounds(71, 162, 154, 20);
-		contentPane.add(lblAuctionId);
+		tfItem = new JTextField();
+		tfItem.setBounds(217, 107, 86, 20);
+		frame.getContentPane().add(tfItem);
+		tfItem.setColumns(10);
 		
 		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setBounds(71, 212, 154, 20);
-		contentPane.add(lblDescription);
+		lblDescription.setBounds(63, 150, 73, 20);
+		frame.getContentPane().add(lblDescription);
 		
-		tfModelId = new JTextField();
-		tfModelId.setColumns(10);
-		tfModelId.setBounds(235, 111, 155, 20);
-		contentPane.add(tfModelId);
+		tfDescription = new JTextField();
+		tfDescription.setBounds(229, 150, 163, 80);
+		frame.getContentPane().add(tfDescription);
+		tfDescription.setColumns(10);
 		
-		tfAuctPrice = new JTextField();
-		tfAuctPrice.setColumns(10);
-		tfAuctPrice.setBounds(235, 162, 155, 20);
-		contentPane.add(tfAuctPrice);
+		tfModelID = new JTextField();
+		tfModelID.setBounds(229, 252, 86, 20);
+		frame.getContentPane().add(tfModelID);
+		tfModelID.setColumns(10);
 		
-		tfDescrip = new JTextField();
-		tfDescrip.setColumns(10);
-		tfDescrip.setBounds(157, 212, 300, 152);
-		contentPane.add(tfDescrip);
+		JLabel lblModelId = new JLabel("Model ID");
+		lblModelId.setBounds(74, 255, 46, 14);
+		frame.getContentPane().add(lblModelId);
 		
-		btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(136, 375, 89, 23);
-		contentPane.add(btnSubmit);
-		btnSubmit.addActionListener(new ActionListener()     //submit button action listner
+		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setBounds(113, 331, 89, 23);
+		frame.getContentPane().add(btnSubmit);
+				btnSubmit.addActionListener(new ActionListener()     //submit button action listner
 				{
 					public void actionPerformed(ActionEvent event)     
 						{
 							getItemInformation();
-							registerItemData(user);
-							
-							user.scrollPane.add(new Item(name, description, modelID, status, auctionPrice, sellingPrice, id, sellerID, buyerID));
+							registerItemData(sellerID);
+							//refreshItemData;
 						}
 				});
 		
-		btnClear = new JButton("Clear");
-		btnClear.setBounds(235, 375, 89, 23);
-		contentPane.add(btnClear);
+		JButton btnClear = new JButton("Clear");
+		btnClear.setBounds(283, 331, 89, 23);
+		frame.getContentPane().add(btnClear);
+		
+		JLabel AuctionPricelbl = new JLabel("Auction Price");
+		AuctionPricelbl.setBounds(74, 306, 62, 14);
+		frame.getContentPane().add(AuctionPricelbl);
+		
+		tfAuctPrice = new JTextField();
+		tfAuctPrice.setBounds(229, 303, 86, 20);
+		frame.getContentPane().add(tfAuctPrice);
+		tfAuctPrice.setColumns(10);
+		frame.setBounds(100, 100, 579, 447);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 tfName.setText("");
-				 tfModelId.setText("");
-				 tfDescrip.setText("");
+				 tfModelID.setText("");
+				 tfDescription.setText("");
 				 tfAuctPrice.setText("");
 			}
 		});
+		
+		frame.setVisible(true);
 	}
-	
 	public void getItemInformation() {
 		 name = tfName.getText();
-		 modelID = tfModelId.getText();
-		 description = tfDescrip.getText();
+		 modelID = tfModelID.getText();
+		 description = tfDescription.getText();
 		 auctionPrice = Integer.parseInt(tfAuctPrice.getText());
+		 System.out.println(name+ " "+ modelID +" "+description+" "+" ");
 		 
 	}
 	
-	public void registerItemData(HomePage user) {
-		Connection conn = null;
+	public void registerItemData(int userID) {
+		Connection conn = MySql.getConnection();
 	      Statement stmt = null;
 	      
 		try {
-			 Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			 
+			 System.out.println("seller ID;"+sellerID);
 		      		  PreparedStatement updateemp = conn.prepareStatement("insert into item values(?,?,?,?,?,?,?,?,?)");
 		      		  updateemp.setString(1,name);
 		    	      updateemp.setString(2,description);
@@ -147,19 +160,15 @@ public class ItemReg extends JFrame {
 		    	      updateemp.setInt(5,auctionPrice);
 		    	      updateemp.setInt(6,sellingPrice);
 		    	      updateemp.setInt(7,id);
-		    	      updateemp.setInt(8,user.userID);
+		    	      updateemp.setInt(8,userID);
 		    	      updateemp.setInt(9,0);
-			    	    
-			//st1.execute("INSERT INTO User_Details (Name,Gender,Password,DOB,Mobile_Number,Email,Area,State,Nationality,StateIndex) VALUES('"+name+"','"+gender+"','"+password+"','"+dobb+"','"+mobileNumber+"','"+email+"','"+area+"','"+state+"','"+nationality+"',"+index+")");
-			//st1.close();
-			//con1.close();
-			//JOptionPane.showMessageDialog(null,"Data are Registered Successfully");
+		    	      updateemp.executeUpdate();
+
 		    	     
 
 		}
 		catch (Exception e) {
-			System.out.println("ExceptionReg is " + e);
+			System.out.println("ExceptionRegItem is " + e);
 		}
 	}
-
 }

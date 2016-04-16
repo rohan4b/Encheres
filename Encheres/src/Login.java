@@ -22,11 +22,6 @@ public class Login {
 	private JFrame loginFrame;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   static final String DB_URL = "jdbc:mysql://localhost:3306/test";
-	   static final String USER = "root";
-	   static final String PASS = "root";
-	   
 	   String name;
 	   String password;
 	   String Username;
@@ -37,16 +32,12 @@ public class Login {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
 				try {
 					Login window = new Login();
 					window.loginFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
-		});
 	}
 
 	/**
@@ -132,25 +123,21 @@ public class Login {
 	}
 		public void CheckPassword() {
 	
-			Connection conn = null;
+			Connection conn = MySql.getConnection();
 		      Statement stmt = null;
 			try {
-				  Class.forName("com.mysql.jdbc.Driver");
 				  name=usernameField.getText();
 				  password=String.valueOf(passwordField.getPassword());
-			      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			     // System.out.println(name+password);
-
 			       stmt = conn.createStatement();
 			    String SQL = "SELECT * FROM user_detail ;";
 
 			    ResultSet rs = stmt.executeQuery(SQL);
 			    
-			            // Check Username and Password
+			            												// Check Username and Password
 			    while (rs.next()) {
 			    	Username = rs.getString("username");
  			         databasePassword = rs.getString("password");
-				      System.out.println(Username+" "+databasePassword);      
+				    //  System.out.println(Username+" "+databasePassword);      
 			    if (name.equalsIgnoreCase(Username) && password.equals(databasePassword)) 
 			    	{
 			    		isPasswordOk=1;

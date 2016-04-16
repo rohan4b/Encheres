@@ -1,11 +1,13 @@
-//import java.awt.EventQueue;
+import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
-//import java.awt.Button;
+import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,16 +18,20 @@ import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import java.awt.ScrollPane;
+import java.awt.BorderLayout;
 import java.awt.Color;
 //import java.awt.List;
 import javax.swing.UIManager;
+import java.awt.FlowLayout;
+import java.awt.Dimension;
 
 public class HomePage {
 
 	private JFrame homepageFrame;
 	private JTextField searchField;
-	ScrollPane scrollPane;
-	private final Action action = new SwingAction();
+	private JScrollPane scrollPane;
+
+	
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost:3306/test";
 	   static final String USER = "root";
@@ -33,7 +39,9 @@ public class HomePage {
 	   
 	    String name, username, password, securityQ, answer;
 	    int credits, userID, contactNo;
+	    ArrayList<Item> itemList;
 		JTextField buyCredTestField;
+	
 	   
 	   
 
@@ -59,12 +67,13 @@ public class HomePage {
 
 	public HomePage(int userID){
 				
+		itemList = new ArrayList<Item>();
+		
 				Connection conn = null;
 			      Statement stmt = null;
 			      
 				try {
-					 Class.forName("com.mysql.jdbc.Driver");
-					conn = DriverManager.getConnection(DB_URL,USER,PASS);
+					conn = MySql.getConnection();
 					stmt=conn.createStatement();
 					String SQL = "SELECT * FROM user_detail WHERE userID = " + String.valueOf(userID);
 					ResultSet rs = stmt.executeQuery(SQL);
@@ -76,18 +85,13 @@ public class HomePage {
 					this.answer = rs.getString("answer");
 					this.credits = rs.getInt("credits");
 					this.contactNo = rs.getInt("contact");
-					
-					System.out.println("name: "+this.name);
-
 				}
 				catch (Exception e) {
-					System.out.println("ExceptionReg is " + e);
+					System.out.println("Exceptionhomepage is " + e);
 				}
 				initialize();
+				
 	}
-
-
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -127,11 +131,14 @@ public class HomePage {
 		JButton btnSellItem = new JButton("Sell Item");
 		btnSellItem.setBounds(486, 229, 146, 23);
 		homepageFrame.getContentPane().add(btnSellItem);
-		btnSellItem.addActionListener(new ActionListener()     //submit button action listner
+		btnSellItem.addActionListener(new ActionListener()     //sellItem button action listner
 				{
 					public void actionPerformed(ActionEvent event)     
 						{
-							//new ItemReg(HomePage);
+						System.out.println("user ID:"+userID);
+						
+							new ItemReg(userID);
+							refreshItemPanel();
 						}
 				});
 		
@@ -143,11 +150,6 @@ public class HomePage {
 		lblYouHave.setFont(new Font("Coffee At Midnight Demo", Font.BOLD | Font.ITALIC, 14));
 		lblYouHave.setBounds(476, 159, 77, 38);
 		homepageFrame.getContentPane().add(lblYouHave);
-		
-		ScrollPane scrollPane = new ScrollPane();
-		scrollPane.setBackground(Color.RED);
-		scrollPane.setBounds(0, 292, 805, 176);
-		homepageFrame.getContentPane().add(scrollPane);
 		
 		JLabel welcomeName = new JLabel(name);
 		welcomeName.setBackground(UIManager.getColor("Button.background"));
@@ -197,14 +199,32 @@ public class HomePage {
 		buyCredTestField.setBounds(664, 196, 86, 20);
 		homepageFrame.getContentPane().add(buyCredTestField);
 		buyCredTestField.setColumns(10);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 298, 805, 170);
+		
+		
+		JPanel CurItemsPane = new JPanel();
+		
+		//CurItemsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5))
+		
+		for(int i=0; i<itemList.size(); i++)
+		{
+			itemList.get(i).setPreferredSize(new Dimension(150,150));
+			CurItemsPane.add(itemList.get(i));
+		}
+		
+		CurItemsPane.revalidate();
+		scrollPane.setViewportView(CurItemsPane);
+		homepageFrame.getContentPane().add(scrollPane);
+		
 		homepageFrame.setVisible(true);
 	}
 	
 	
-	void addItems()
+	public void refreshItemPanel()
 	{
-		int numItems = 0;
-		
+		itemList.clear();
 		/*
 		 * access the item data table
 		 * while(rs.next())
@@ -216,14 +236,44 @@ public class HomePage {
 		 * 		}
 		 * }
 		 */
+		String itemName, description, modelID,  status;
+		int auctionPrice, sellingPrice, id, sellerID, buyerID;
 		
+		  Connection conn = null;
+	      Statement stmt = null;
+		try {
+			  Class.forName("com.mysql.jdbc.Driver");
+		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		     // System.out.println(name+password);
+
+		       stmt = conn.createStatement();
+		    String SQL = "SELECT * FROM item ;";
+
+		    ResultSet rs = stmt.executeQuery(SQL);
+		    
+		            // Check Username and Password
+		    while (rs.next()) {
+		    	id = rs.getInt("id");
+		    	sellerID = rs.getInt("sellerID");
+		    	buyerID = rs.getInt("buyerID");
+		    	auctionPrice = rs.getInt("auctionPrice");
+		    	sellingPrice = rs.getInt("sellingPrice");
+		    	status = rs.getString("status");
+		    	modelID = rs.getString("modelID");
+		    	description = rs.getString("description");
+		    	itemName = rs.getString("name");
+		    	System.out.println("ooooooooooooo");
+		        
+		              
+		    if (status.equalsIgnoreCase("Available") && sellerID != userID) 
+		    	{
+		    		itemList.add(new Item(itemName, description, modelID,  status, auctionPrice, sellingPrice, id, sellerID, buyerID));
+		    	} 
+		    }
+		}catch (Exception e) {
+			System.out.println("ExceptionAddItemPanel is " + e);
+		}	
 	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
+	
+	
 }

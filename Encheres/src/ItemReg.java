@@ -1,22 +1,16 @@
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.sun.glass.ui.Window;
-
-import java.awt.Color;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.Timer;
 
 public class ItemReg {
 
@@ -109,6 +103,17 @@ public class ItemReg {
 							getItemInformation();
 							registerItemData(sellerID);
 							//refreshItemData;
+							frame.setVisible(false);
+							
+							Timer timer = new Timer(10 * 3000, new ActionListener() {
+								  @Override
+								  public void actionPerformed(ActionEvent arg0) {
+								  }
+								});
+								timer.setRepeats(false); // Only execute once
+								timer.start(); // Go go go!
+						
+							//set the item sold; get the payment done
 						}
 				});
 		
@@ -161,7 +166,7 @@ public class ItemReg {
 		    	      updateemp.setInt(6,sellingPrice);
 		    	      updateemp.setInt(7,id);
 		    	      updateemp.setInt(8,userID);
-		    	      updateemp.setInt(9,0);
+		    	      updateemp.setInt(9,userID);
 		    	      updateemp.executeUpdate();
 
 		    	     

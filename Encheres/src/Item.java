@@ -6,13 +6,13 @@ import javax.swing.JInternalFrame;
 public class Item extends JPanel {
 
 	private String name, descrption, modelID,  status;
-	private int auctionPrice, sellingPrice, id, sellerID, buyerID;// 0 for not sold; 1 for available; 2 for sold;
-	static int ID;
+	private int auctionPrice, sellingPrice, id, sellerID, buyerID;
 	
-	static {
-		//initialize the id
-	}
-
+	private JButton Bidbtn;
+	private JLabel lblBidPrice;
+	private JLabel itemName;
+	private JLabel bidPrice;
+	
 	public String getName() {
 		return name;
 	}
@@ -104,19 +104,19 @@ public class Item extends JPanel {
 	
 		setLayout(null);
 		
-		JLabel itemName = new JLabel("New label");
+		itemName = new JLabel(this.name);
 		itemName.setBounds(12, 12, 125, 15);
 		add(itemName);
 		
-		JLabel lblBidPrice = new JLabel("Bid price");
+		lblBidPrice = new JLabel("Bid price");
 		lblBidPrice.setBounds(12, 51, 70, 15);
 		add(lblBidPrice);
 		
-		JLabel bidPrice = new JLabel("New label");
+		bidPrice = new JLabel(String.valueOf(this.sellingPrice));
 		bidPrice.setBounds(69, 51, 70, 15);
 		add(bidPrice);
 		
-		JButton Bidbtn = new JButton("Bid Now!");
+		Bidbtn = new JButton("Bid Now!");
 		Bidbtn.setBounds(12, 122, 125, 25);
 		add(Bidbtn);
 		

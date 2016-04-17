@@ -2,16 +2,22 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Action;
 
 public class Item extends JPanel {
 
 	private String name, descrption, modelID,  status;
 	private int auctionPrice, sellingPrice, id, sellerID, buyerID;
 	
-	private JButton Bidbtn;
+	private JButton BidNowBtn;
 	private JLabel lblBidPrice;
 	private JLabel itemName;
 	private JLabel bidPrice;
+	private final Action action = new SwingAction();
 	
 	public String getName() {
 		return name;
@@ -116,9 +122,20 @@ public class Item extends JPanel {
 		bidPrice.setBounds(69, 51, 70, 15);
 		add(bidPrice);
 		
-		Bidbtn = new JButton("Bid Now!");
-		Bidbtn.setBounds(12, 122, 125, 25);
-		add(Bidbtn);
+		BidNowBtn = new JButton("Bid Now!");
+		//BidNowBtn.setAction(action);
+		BidNowBtn.setBounds(12, 122, 125, 25);
+		add(BidNowBtn);
+		BidNowBtn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent event)
+				{
+				System.out.println("Inside action Listener!");
+
+					new Bidbox(sellerID,id);
+						
+				}
+		});
 		
 
 	}
@@ -129,5 +146,14 @@ public class Item extends JPanel {
 	}
 	
 	
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
 }
 

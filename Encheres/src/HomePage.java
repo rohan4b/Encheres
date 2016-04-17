@@ -102,7 +102,7 @@ public class HomePage {
 				
 				initialize();
 				
-				int INTERVAL = 1000;
+				int INTERVAL = 5000;
 
 				timer = new Timer(INTERVAL, new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
